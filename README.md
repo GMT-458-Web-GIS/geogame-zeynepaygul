@@ -4,7 +4,7 @@
 ## Game Objective
 Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locate a hidden treasure on the map in the fewest possible clicks or in the shortest time. With each click, the player receives feedback on their proximity to the treasure in the form of "Hot," "Warm," or "Cold" hints.
 
-## Technologies and Libraries Used
+## Requirements
 - **HTML, CSS, JavaScript**: Used for developing the game interface and core game logic.
 - **OpenLayers**: Map library used to manage the map component and the hidden treasure target.
 
@@ -22,9 +22,3 @@ Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locat
 2. **Making Guesses**: The player clicks anywhere on the map in an attempt to find the treasure. After each click, a hint about the proximity of the treasure ("Hot," "Warm," or "Cold") is shown in the hint area.
 3. **Finding the Treasure**: The game ends and the player wins once they click close enough to the treasure's location.
 
-
-## Requirements
-I will only use Leaflet for main library.
-HTML files for views.
-CSS files for design.
-JS files for effect , time and marker detail.
