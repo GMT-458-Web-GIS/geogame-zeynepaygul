@@ -1,6 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ATV5e7Id)
 # Hot-Cold Treasure Hunt
 
+![geogame](https://github.com/user-attachments/assets/7c51b554-4202-42fc-a663-0343c634becb)
+
+
 ## Game Objective
 Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locate a hidden treasure on the map in the fewest possible clicks or in the shortest time. With each click, the player receives feedback on their proximity to the treasure in the form of "Hot," "Warm," or "Cold" hints.
 
