@@ -22,5 +22,9 @@ Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locat
 2. **Making Guesses**: The player clicks anywhere on the map in an attempt to find the treasure. After each click, a hint about the proximity of the treasure ("Hot," "Warm," or "Cold") is shown in the hint area.
 3. **Finding the Treasure**: The game ends and the player wins once they click close enough to the treasure's location.
 
-## Summary
-This project aims to develop an interactive geo-game on a web browser using HTML, CSS, JavaScript, and OpenLayers. The goal of the game is to find the hidden treasure on the map as quickly as possible or in the fewest clicks. Based on the "Hot-Cold" logic, the game provides the player with hints after each click, allowing them to get closer to the treasure step by step.
+
+## Requirements
+I will only use Leaflet for main library.
+HTML files for views.
+CSS files for design.
+JS files for effect , time and marker detail.
