@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo-Game: Hot-Cold Treasure Hunt</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://openlayers.org/en/v6.5.0/build/ol.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Geo-Game: Hot-Cold Treasure Hunt</h1>
+
+        <!-- Start Button -->
+        <button id="startButton">Start Game</button>
+
+        <!-- Map Viewer -->
+        <div id="map" class="map"></div>
+
+        <!-- Hint and Click Counter Area -->
+        <div class="info-panel">
+            <p id="hint">Click "Start" to begin the game.</p>
+            <p>Clicks: <span id="clickCount">0</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
