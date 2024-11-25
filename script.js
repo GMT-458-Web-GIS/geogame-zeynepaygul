@@ -1,8 +1,8 @@
 // Harita başlangıç koordinatları (Beytepe Kampüsü)
-const centerCoords = [39.877, 32.749]; // [longitude, latitude]
+const centerCoords = [32.729, 39.869]; // [longitude, latitude]
 
 // Nokta için rastgele bir yer seçme
-let treasureCoords = [39.877 + (Math.random() - 0.5) * 0.01, 32.749 + (Math.random() - 0.5) * 0.01]; // Yakın bir yer
+let treasureCoords = [32.726 + (Math.random() - 0.3) * 0.01, 39.869 + (Math.random() - 0.3) * 0.01]; // Yakın bir yer
 
 // Tıklama sayacı
 let clickCount = 0;
