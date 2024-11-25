@@ -1,61 +1,71 @@
-let treasureLocation;
+// Harita başlangıç koordinatları (Beytepe Kampüsü)
+const centerCoords = [32.749, 39.877]; // [longitude, latitude]
+
+// Nokta için rastgele bir yer seçme
+let treasureCoords = [32.749 + (Math.random() - 0.5) * 0.01, 39.877 + (Math.random() - 0.5) * 0.01]; // Yakın bir yer
+
+// Tıklama sayacı
 let clickCount = 0;
 
-const mapElement = document.getElementById('map');
-const startButton = document.getElementById('startButton');
-const hintElement = document.getElementById('hint');
-const clickCountElement = document.getElementById('clickCount');
-
-// OpenLayers haritasını oluştur
+// Harita oluşturma
 const map = new ol.Map({
-    target: mapElement,
+    target: 'map',
     layers: [
         new ol.layer.Tile({
-            source: new ol.source.OSM()
-        })
+            source: new ol.source.OSM(), // OpenStreetMap tabanı
+        }),
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat([37.0, 39.0]), // Türkiye'nin ortası
-        zoom: 6
-    })
+        center: ol.proj.fromLonLat(centerCoords),
+        zoom: 16,
+    }),
 });
 
-// Oyun başlatma fonksiyonu
-startButton.addEventListener('click', startGame);
-
-function startGame() {
-    clickCount = 0;
-    clickCountElement.innerText = clickCount;
-    hintElement.innerText = 'Click on the map to find the treasure!';
-    
-    // Rastgele hazine konumu oluştur
-    const lon = (Math.random() * (42.0 - 32.0) + 32.0); // Longtitude aralığı
-    const lat = (Math.random() * (43.0 - 36.0) + 36.0); // Latitude aralığı
-    treasureLocation = ol.proj.fromLonLat([lon, lat]);
-}
-
-// Harita üzerinde tıklama olayını dinle
-map.on('singleclick', function(event) {
+// Harita üzerine tıklama dinleyicisi
+map.on('click', (event) => {
     clickCount++;
-    clickCountElement.innerText = clickCount;
-    
-    const clickedLocation = event.coordinate;
-    const distance = ol.sphere.getDistance(clickedLocation, treasureLocation);
-    giveHint(distance);
+    document.getElementById('clickCount').innerText = clickCount;
+
+    // Tıklama yapılan yerin koordinatlarını al
+    const clickedCoords = ol.proj.toLonLat(event.coordinate);
+
+    // Hint butonu ile bu bilgiyi işlemek için güncelle
+    calculateHint(clickedCoords);
 });
 
-// Mesafeye göre ipucu verme
-function giveHint(distance) {
+// Hint hesaplama ve gösterme
+function calculateHint(clickedCoords) {
+    const distance = getDistance(clickedCoords, treasureCoords);
+
+    let hintMessage = '';
     if (distance < 50) {
-        hintElement.innerText = 'Hot! Very close!';
-    } else if (distance < 150) {
-        hintElement.innerText = 'Warm! You are getting there.';
+        hintMessage = 'Hot! Very close!';
+    } else if (distance < 200) {
+        hintMessage = 'Warm. You are getting closer.';
     } else {
-        hintElement.innerText = 'Cold! Far away.';
+        hintMessage = 'Cold. You are far away.';
     }
 
-    // Hazineyi bulduğunda
-    if (distance < 10) {
-        hintElement.innerText = 'Congratulations! You found the treasure!';
-    }
+    document.getElementById('hint').innerText = hintMessage;
 }
+
+// Koordinatlar arasındaki mesafeyi hesapla (metre cinsinden)
+function getDistance(coord1, coord2) {
+    const R = 6371e3; // Dünya yarıçapı (metre cinsinden)
+    const lat1 = coord1[1] * (Math.PI / 180);
+    const lat2 = coord2[1] * (Math.PI / 180);
+    const deltaLat = (coord2[1] - coord1[1]) * (Math.PI / 180);
+    const deltaLon = (coord2[0] - coord1[0]) * (Math.PI / 180);
+
+    const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Mesafe metre cinsinden
+}
+
+// Oyunu başlatma
+document.getElementById('hintButton').addEventListener('click', () => {
+    alert("Click on the map and see the hint!");
+});
