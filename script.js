@@ -33,21 +33,6 @@ map.on('click', (event) => {
     calculateHint(clickedCoords);
 });
 
-// Hint hesaplama ve gösterme
-function calculateHint(clickedCoords) {
-    const distance = getDistance(clickedCoords, treasureCoords);
-
-    let hintMessage = '';
-    if (distance < 50) {
-        hintMessage = 'Hot! Very close!';
-    } else if (distance < 200) {
-        hintMessage = 'Warm. You are getting closer.';
-    } else {
-        hintMessage = 'Cold. You are far away.';
-    }
-
-    document.getElementById('hint').innerText = hintMessage;
-}
 
 // Koordinatlar arasındaki mesafeyi hesapla (metre cinsinden)
 function getDistance(coord1, coord2) {
@@ -69,3 +54,67 @@ function getDistance(coord1, coord2) {
 document.getElementById('hintButton').addEventListener('click', () => {
     alert("Click on the map and see the hint!");
 });
+ // Gizli nokta ile tıklanan yer arasındaki mesafeyi hesapla (metre)
+ const distance = ol.sphere.getDistance(
+    ol.proj.toLonLat(hiddenPoint),
+    ol.proj.toLonLat(clickedCoord)
+);
+// Hint hesaplama ve gösterme
+function calculateHint(clickedCoords) {
+    const distance = getDistance(clickedCoords, treasureCoords); // Tıklanan yer ile hazine arasındaki mesafe
+
+    let hintMessage = '';
+    if (distance < 100) {
+        // Hazine bulundu, oyun bitiriliyor
+        hintMessage = 'Hot! You found the treasure!';
+        showPopup(); // Pop-up göster
+        markTreasureOnMap(treasureCoords); // Gizli noktayı haritada işaretle
+        map.un('click'); // Tıklama olayını devre dışı bırak
+    } else if (distance < 200) {
+        hintMessage = 'Warm. You are getting closer.';
+    } else {
+        hintMessage = 'Cold. You are far away.';
+    }
+
+    // İpucu mesajını güncelle
+    document.getElementById('hint').innerText = hintMessage;
+}
+
+// Hazinenin yerini haritada işaretleme (görsel ekleme)
+function markTreasureOnMap(coords) {
+    const treasureFeature = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.fromLonLat(coords)),
+    });
+
+    const treasureLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [treasureFeature],
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 8,
+                fill: new ol.style.Fill({ color: 'red' }),
+                stroke: new ol.style.Stroke({ color: 'white', width: 2 }),
+            }),
+        }),
+    });
+
+    map.addLayer(treasureLayer); // Hazinenin yerini gösteren katmanı ekler
+}
+
+
+
+// Mesajı ve tıklama sayısını güncelle
+document.getElementById('hint').textContent = hintMessage;
+document.getElementById('clickCount').textContent = clickCount;
+function showPopup() {
+    // Pop-up ve karartma arka planını göster
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('popupOverlay').style.display = 'block';
+
+    // 3 saniye sonra pop-up'ı otomatik olarak gizle
+    setTimeout(() => {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('popupOverlay').style.display = 'none';
+    }, 3000);
+}
