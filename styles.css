@@ -1,6 +1,6 @@
 /* Genel stil ayarları */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -88,4 +88,74 @@ footer {
     text-align: center;
     color: #666;
     font-size: 0.9rem;
+}
+
+/* Başlangıç pop-up */
+#introPopup {
+    display: block; /* Başlangıçta görünür */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+}
+
+#introPopup h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #ffcc00;
+}
+
+#introPopup p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+#introPopup button {
+    padding: 10px 25px;
+    background-color: #ffcc00;
+    border: none;
+    color: #333;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#introPopup button:hover {
+    background-color: #ff9900;
+}
+
+/* Genel Pop-up Stil */
+.popup {
+    display: none; /* Varsayılan olarak gizli */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 999;
+}
+
+.popup button {
+    margin-top: 10px;
+    background-color: #fff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
