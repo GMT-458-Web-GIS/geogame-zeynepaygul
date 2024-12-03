@@ -1,120 +1,88 @@
-// Harita başlangıç koordinatları (Beytepe Kampüsü)
-const centerCoords = [32.729, 39.869]; // [longitude, latitude]
-
-// Nokta için rastgele bir yer seçme
-let treasureCoords = [32.726 + (Math.random() - 0.3) * 0.01, 39.869 + (Math.random() - 0.3) * 0.01]; // Yakın bir yer
-
-// Tıklama sayacı
-let clickCount = 0;
-
-// Harita oluşturma
 const map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.Tile({
-            source: new ol.source.OSM(), // OpenStreetMap tabanı
-        }),
+            source: new ol.source.OSM()
+        })
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat(centerCoords),
-        zoom: 16,
-    }),
+        center: ol.proj.fromLonLat([32.7362, 39.8680]), // Beytepe'nin merkezine yakın koordinatlar
+        zoom: 16
+    })
 });
 
-// Harita üzerine tıklama dinleyicisi
-map.on('click', (event) => {
-    clickCount++;
-    document.getElementById('clickCount').innerText = clickCount;
+// Gizli nokta (hedef koordinatları)
+const secretLocation = ol.proj.fromLonLat([32.7362, 39.8680]); // 39°52'05.0"N 32°44'10.4"E
+let clickCount = 0;
+let gameOver = false; // Oyunun bitip bitmediğini kontrol eder
 
-    // Tıklama yapılan yerin koordinatlarını al
-    const clickedCoords = ol.proj.toLonLat(event.coordinate);
+// Oyuncunun tıklama işlemi
+map.on('singleclick', (event) => {
+    if (gameOver) return; // Oyun bittiyse işlemleri durdur
 
-    // Hint butonu ile bu bilgiyi işlemek için güncelle
-    calculateHint(clickedCoords);
-});
+    const clickedCoords = event.coordinate;
+    const distance = ol.sphere.getDistance(
+        ol.proj.toLonLat(clickedCoords),
+        ol.proj.toLonLat(secretLocation)
+    );
 
+    // Nokta yanıp söner
+    createBlinkingPoint(clickedCoords);
 
-// Koordinatlar arasındaki mesafeyi hesapla (metre cinsinden)
-function getDistance(coord1, coord2) {
-    const R = 6371e3; // Dünya yarıçapı (metre cinsinden)
-    const lat1 = coord1[1] * (Math.PI / 180);
-    const lat2 = coord2[1] * (Math.PI / 180);
-    const deltaLat = (coord2[1] - coord1[1]) * (Math.PI / 180);
-    const deltaLon = (coord2[0] - coord1[0]) * (Math.PI / 180);
-
-    const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-              Math.cos(lat1) * Math.cos(lat2) *
-              Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    return R * c; // Mesafe metre cinsinden
-}
-
-// Oyunu başlatma
-document.getElementById('hintButton').addEventListener('click', () => {
-    alert("Click on the map and see the hint!");
-});
- // Gizli nokta ile tıklanan yer arasındaki mesafeyi hesapla (metre)
- const distance = ol.sphere.getDistance(
-    ol.proj.toLonLat(hiddenPoint),
-    ol.proj.toLonLat(clickedCoord)
-);
-// Hint hesaplama ve gösterme
-function calculateHint(clickedCoords) {
-    const distance = getDistance(clickedCoords, treasureCoords); // Tıklanan yer ile hazine arasındaki mesafe
-
-    let hintMessage = '';
-    if (distance < 100) {
-        // Hazine bulundu, oyun bitiriliyor
-        hintMessage = 'Hot! You found the treasure!';
-        showPopup(); // Pop-up göster
-        markTreasureOnMap(treasureCoords); // Gizli noktayı haritada işaretle
-        map.un('click'); // Tıklama olayını devre dışı bırak
-    } else if (distance < 200) {
-        hintMessage = 'Warm. You are getting closer.';
-    } else {
-        hintMessage = 'Cold. You are far away.';
+    // Uzaklığa göre mesaj göster
+    if (distance > 50) {
+        updateHint('Cold');
+    } else if (distance <= 50 && distance > 20) {
+        updateHint('Warm');
+    } else if (distance <= 20) {
+        updateHint('Congratulations!');
+        showPopup();
+        gameOver = true; // Oyun bitti olarak işaretle
     }
 
-    // İpucu mesajını güncelle
-    document.getElementById('hint').innerText = hintMessage;
-}
+    if (!gameOver) {
+        document.getElementById('clickCount').textContent = ++clickCount;
+    }
+});
 
-// Hazinenin yerini haritada işaretleme (görsel ekleme)
-function markTreasureOnMap(coords) {
-    const treasureFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat(coords)),
-    });
+// Hint butonu
+document.getElementById('hintButton').addEventListener('click', () => {
+    const popup = document.getElementById('hintPopup');
+    popup.style.display = 'block';
+});
 
-    const treasureLayer = new ol.layer.Vector({
+// Close popup
+document.getElementById('closePopup').addEventListener('click', () => {
+    const popup = document.getElementById('hintPopup');
+    popup.style.display = 'none';
+});
+
+// Nokta yanıp söner
+function createBlinkingPoint(coords) {
+    const point = new ol.layer.Vector({
         source: new ol.source.Vector({
-            features: [treasureFeature],
+            features: [new ol.Feature(new ol.geom.Point(coords))]
         }),
         style: new ol.style.Style({
             image: new ol.style.Circle({
                 radius: 8,
-                fill: new ol.style.Fill({ color: 'red' }),
-                stroke: new ol.style.Stroke({ color: 'white', width: 2 }),
-            }),
-        }),
+                fill: new ol.style.Fill({ color: 'red' })
+            })
+        })
     });
-
-    map.addLayer(treasureLayer); // Hazinenin yerini gösteren katmanı ekler
+    map.addLayer(point);
+    setTimeout(() => map.removeLayer(point), 300);
 }
 
+// İpucu güncelleme
+function updateHint(message) {
+    document.getElementById('hint').textContent = message;
+}
 
-
-// Mesajı ve tıklama sayısını güncelle
-document.getElementById('hint').textContent = hintMessage;
-document.getElementById('clickCount').textContent = clickCount;
+// Tebrik mesajı
 function showPopup() {
-    // Pop-up ve karartma arka planını göster
-    document.getElementById('popup').style.display = 'block';
-    document.getElementById('popupOverlay').style.display = 'block';
-
-    // 3 saniye sonra pop-up'ı otomatik olarak gizle
-    setTimeout(() => {
-        document.getElementById('popup').style.display = 'none';
-        document.getElementById('popupOverlay').style.display = 'none';
-    }, 3000);
+    const popup = document.getElementById('hintPopup');
+    popup.textContent = "Congratulations! You found the treasure!";
+    popup.style.display = 'block';
+    setTimeout(() => popup.style.display = 'none', 5000);
 }
