@@ -6,13 +6,13 @@ const map = new ol.Map({
         })
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat([32.7362, 39.8680]), // Beytepe'nin merkezine yakın koordinatlar
-        zoom: 16
+        center: ol.proj.fromLonLat([32.7336, 39.8731]), // Beytepe'nin merkezine yakın koordinatlar
+        zoom: 15
     })
 });
 
 // Gizli nokta (hedef koordinatları)
-const secretLocation = ol.proj.fromLonLat([32.7362, 39.8680]); // 39°52'05.0"N 32°44'10.4"E
+const secretLocation = ol.proj.fromLonLat([32.7336, 39.8731]); // 39°52'05.0"N 32°44'10.4"E
 let clickCount = 0;
 let gameOver = false; // Oyunun bitip bitmediğini kontrol eder
 
@@ -84,5 +84,5 @@ function showPopup() {
     const popup = document.getElementById('hintPopup');
     popup.textContent = "Congratulations! You found the treasure!";
     popup.style.display = 'block';
-    setTimeout(() => popup.style.display = 'none', 5000);
+    setTimeout(() => popup.style.display = 'none', 10000);
 }
