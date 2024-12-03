@@ -6,13 +6,13 @@ const map = new ol.Map({
         })
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat([32.7336, 39.8731]), // Beytepe'nin merkezine yakın koordinatlar
+        center: ol.proj.fromLonLat([32.7333, 39.8727]), // Beytepe'nin merkezine yakın koordinatlar
         zoom: 16
     })
 });
 
 // Gizli nokta (hedef koordinatları)
-const secretLocation = ol.proj.fromLonLat([32.7336, 39.8731]); // 39°52'05.0"N 32°44'10.4"E
+const secretLocation = ol.proj.fromLonLat([32.7333, 39.8727]); // 39°52'05.0"N 32°44'10.4"E
 let clickCount = 0;
 let gameOver = false; // Oyunun bitip bitmediğini kontrol eder
 
@@ -30,9 +30,9 @@ map.on('singleclick', (event) => {
     createBlinkingPoint(clickedCoords);
 
     // Uzaklığa göre mesaj göster
-    if (distance > 200) {
+    if (distance > 150) {
         updateHint('Cold');
-    } else if (distance <= 200 && distance > 20) {
+    } else if (distance <= 150 && distance > 20) {
         updateHint('Warm');
     } else if (distance <= 20) {
         updateHint('Congratulations!');
