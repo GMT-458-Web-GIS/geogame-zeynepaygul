@@ -7,7 +7,7 @@ const map = new ol.Map({
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([32.7336, 39.8731]), // Beytepe'nin merkezine yakın koordinatlar
-        zoom: 15.4
+        zoom: 16
     })
 });
 
@@ -30,9 +30,9 @@ map.on('singleclick', (event) => {
     createBlinkingPoint(clickedCoords);
 
     // Uzaklığa göre mesaj göster
-    if (distance > 50) {
+    if (distance > 200) {
         updateHint('Cold');
-    } else if (distance <= 50 && distance > 20) {
+    } else if (distance <= 200 && distance > 20) {
         updateHint('Warm');
     } else if (distance <= 20) {
         updateHint('Congratulations!');
