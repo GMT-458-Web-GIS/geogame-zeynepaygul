@@ -7,7 +7,7 @@ const map = new ol.Map({
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([32.7336, 39.8731]), // Beytepe'nin merkezine yakın koordinatlar
-        zoom: 15
+        zoom: 15.4
     })
 });
 
