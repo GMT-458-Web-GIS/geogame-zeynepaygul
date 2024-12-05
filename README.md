@@ -18,8 +18,6 @@ Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locat
 - **Click Counter**: A counter showing the number of clicks made by the player.
 - **Start Button**: Button to start the game, which hides the treasure at a random position on the map.
 
-https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
-
 ## Game Flow
 
 1. **Start**: The player clicks the "Start" button to begin the game. A treasure is hidden at a random location on the map.
