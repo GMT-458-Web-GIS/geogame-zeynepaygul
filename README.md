@@ -1,6 +1,5 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ATV5e7Id)
-# Hot-Cold Treasure Hunt  https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
-
+# Hot-Cold Treasure Hunt  
 ![geogame](https://github.com/user-attachments/assets/7c51b554-4202-42fc-a663-0343c634becb)
 
 
@@ -18,6 +17,8 @@ Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locat
 - **Hint Area**: Displays hints ("Hot," "Warm," or "Cold") about the treasure's proximity after each click.
 - **Click Counter**: A counter showing the number of clicks made by the player.
 - **Start Button**: Button to start the game, which hides the treasure at a random position on the map.
+
+https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
 
 ## Game Flow
 
