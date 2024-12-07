@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot-Cold Treasure Hunt</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            background-color: black; /* Yüklenene kadar arka plan rengi */
+        }
+
+        /* Arka plan GIF */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZoeW8zem8yeHcwN2ZzdXNhZm13Nzh5OWlzb2UxMTMwMGRheDM0YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/K4FbQQ7mPaamViM2VZ/giphy.gif'); /* Buraya GIF dosyasının yolu */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3; /* Metinler okunabilir olsun diye transparanlık */
+            z-index: -1; /* Metinlerin altında kalmasını sağlar */
+        }
+
+        .container {
+            z-index: 1;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        button:active {
+            background-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hot-Cold Treasure Hunt</h1>
+        <p>
+            Welcome to the thrilling Hot-Cold Treasure Hunt game! 
+            Your mission is to find the hidden treasure on the map. 
+            Use the hot and cold hints to guide you. 
+            Click "Start Game" to begin your adventure!
+        </p>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <script>
+        function startGame() {
+            // Oyun ekranına yönlendirme
+            window.location.href = "index.html"; // Oyun ekranınızın dosya adı
+        }
+    </script>
+</body>
+</html>

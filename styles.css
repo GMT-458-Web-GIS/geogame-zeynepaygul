@@ -11,17 +11,20 @@ body {
 }
 
 header {
-    background-color: #ccc;
+    background-color: #27c9ab; /* Yeşil kutu arka planı */
     width: 100%;
     padding: 10px;
     text-align: center;
-    border-bottom: 2px solid #999;
+    border-bottom: 2px solid #005854; /* Daha koyu yeşil bir alt sınır */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif bir gölge ekleme */
+    border-radius: 8px; /* Kutucuğun köşelerini yuvarlatma */
+    margin: 10px 0; /* Üst ve alt boşluk */
 }
 
 header h1 {
     margin: 0;
     font-size: 1.5rem;
-    color: #333;
+    color: white; /* Beyaz metin rengi */
 }
 
 /* Ana içerik */

@@ -6,19 +6,40 @@ const map = new ol.Map({
         })
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat([32.7333, 39.8727]), // Beytepe'nin merkezine yakın koordinatlar
+        center: ol.proj.fromLonLat([32.7333, 39.8727]),
         zoom: 16
     })
 });
 
-// Gizli nokta (hedef koordinatları)
-const secretLocation = ol.proj.fromLonLat([32.7333, 39.8727]); // 39°52'05.0"N 32°44'10.4"E
+// İpucu ve konumların listesi
+const locations = [
+    {
+        coords: ol.proj.fromLonLat([32.7333, 39.8727]),
+        hint: "The monument with Atatürk's words 'En büyük savaş, cahilliğe karşı yapılan savaştır.' written on it"
+    },
+    {
+        coords: ol.proj.fromLonLat([32.73529706040309, 39.86518316190052]),
+        hint: 'The best place to learn different languages'
+    },
+    {
+        coords: ol.proj.fromLonLat([32.73203561701033, 39.86843968897149]),
+        hint: 'There are plenty of cafes and food places'
+    }
+];
+
+// Rastgele bir konum seç
+let selectedLocation = locations[Math.floor(Math.random() * locations.length)];
+let secretLocation = selectedLocation.coords;
+
 let clickCount = 0;
-let gameOver = false; // Oyunun bitip bitmediğini kontrol eder
+let gameOver = false;
 
 // Oyuncunun tıklama işlemi
 map.on('singleclick', (event) => {
-    if (gameOver) return; // Oyun bittiyse işlemleri durdur
+    if (gameOver) return;
+
+    const popup = document.getElementById('hintPopup');
+    popup.style.display = 'none'; // Pop-up'ı kapat
 
     const clickedCoords = event.coordinate;
     const distance = ol.sphere.getDistance(
@@ -26,10 +47,8 @@ map.on('singleclick', (event) => {
         ol.proj.toLonLat(secretLocation)
     );
 
-    // Nokta yanıp söner
     createBlinkingPoint(clickedCoords);
 
-    // Uzaklığa göre mesaj göster
     if (distance > 150) {
         updateHint('Cold, you are far from the treasure');
     } else if (distance <= 150 && distance > 20) {
@@ -37,7 +56,7 @@ map.on('singleclick', (event) => {
     } else if (distance <= 20) {
         updateHint('Congratulations!');
         showPopup();
-        gameOver = true; // Oyun bitti olarak işaretle
+        gameOver = true;
     }
 
     if (!gameOver) {
@@ -48,6 +67,7 @@ map.on('singleclick', (event) => {
 // Hint butonu
 document.getElementById('hintButton').addEventListener('click', () => {
     const popup = document.getElementById('hintPopup');
+    popup.textContent = selectedLocation.hint;
     popup.style.display = 'block';
 });
 
@@ -55,6 +75,11 @@ document.getElementById('hintButton').addEventListener('click', () => {
 document.getElementById('closePopup').addEventListener('click', () => {
     const popup = document.getElementById('hintPopup');
     popup.style.display = 'none';
+});
+
+// Tekrar Oyna Butonu
+document.getElementById('restartButton').addEventListener('click', () => {
+    restartGame();
 });
 
 // Nokta yanıp söner
@@ -79,10 +104,30 @@ function updateHint(message) {
     document.getElementById('hint').textContent = message;
 }
 
-// Tebrik mesajı
+// Tebrik mesajı ve "Tekrar Oyna" butonu gösterme
 function showPopup() {
     const popup = document.getElementById('hintPopup');
-    popup.textContent = "Congratulations! You found the treasure!";
+    popup.innerHTML = `
+        Congratulations! You found the treasure!<br>
+        <button id="restartButton">Play Again</button>
+    `;
     popup.style.display = 'block';
-    setTimeout(() => popup.style.display = 'none', 10000);
+
+    // Tekrar Oyna butonu olay dinleyicisini burada tanımlıyoruz
+    document.getElementById('restartButton').addEventListener('click', () => {
+        restartGame();
+    });
+}
+
+// Oyunu sıfırla ve yeni bir rastgele konum seç
+function restartGame() {
+    selectedLocation = locations[Math.floor(Math.random() * locations.length)];
+    secretLocation = selectedLocation.coords;
+    clickCount = 0;
+    gameOver = false;
+
+    document.getElementById('clickCount').textContent = clickCount;
+    updateHint('Click on the map to begin!');
+    const popup = document.getElementById('hintPopup');
+    popup.style.display = 'none';
 }
