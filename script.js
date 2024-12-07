@@ -31,9 +31,9 @@ map.on('singleclick', (event) => {
 
     // Uzaklığa göre mesaj göster
     if (distance > 150) {
-        updateHint('Cold');
+        updateHint('Cold, you are far from the treasure');
     } else if (distance <= 150 && distance > 20) {
-        updateHint('Warm');
+        updateHint('Warm, you are getting closer');
     } else if (distance <= 20) {
         updateHint('Congratulations!');
         showPopup();
