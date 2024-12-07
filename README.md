@@ -4,7 +4,7 @@
 
 
 ## Game Objective
-Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locate a hidden treasure on the map in the fewest possible clicks or in the shortest time. With each click, the player receives feedback on their proximity to the treasure in the form of "Hot," "Warm," or "Cold" hints.
+Geo-Game is an interactive "Hot-Cold" treasure hunting game designed to challenge players to find a hidden treasure on a map using proximity-based clues. The goal is to locate the treasure in as few clicks as possible.
 
 ## Requirements
 - **HTML, CSS, JavaScript**: Used for developing the game interface and core game logic.
@@ -14,13 +14,19 @@ Geo-Game is a "Hot-Cold" treasure hunt game where the player uses hints to locat
 
 ### 1. User Interface
 - **Map Viewer**: The main game screen where the treasure is hidden at a random location on the map.
-- **Hint Area**: Displays hints ("Hot," "Warm," or "Cold") about the treasure's proximity after each click.
-- **Click Counter**: A counter showing the number of clicks made by the player.
-- **Start Button**: Button to start the game, which hides the treasure at a random position on the map.
+- **Clue Area**: Displays clues such as "Hot", "Warm", or "Cold" after each click to indicate proximity to the treasure.
+- **Click Counter**: Tracks the number of attempts the player has made.
+- **Start Button**: Initiates the game and places the treasure at a random location.
 
 ## Game Flow
 
-1. **Start**: The player clicks the "Start" button to begin the game. A treasure is hidden at a random location on the map.
-2. **Making Guesses**: The player clicks anywhere on the map in an attempt to find the treasure. After each click, a hint about the proximity of the treasure ("Hot," "Warm," or "Cold") is shown in the hint area.
-3. **Finding the Treasure**: The game ends and the player wins once they click close enough to the treasure's location.
+1. **Hint**: Players can click on the Hint Button to get additional information about the treasure's location.
+2. **Guess**: Players click anywhere on the map to search for the treasure. After each guess, they receive a clue in the Clue Area about their proximity to the treasure.
+3. **Finding the Treasure**: The game ends when players find the treasure by getting close enough to its location.
+
+## Kaynaklar
+
+[Gpt bağlantısı](https://chatgpt.com/share/67543754-43b4-800c-aa66-4323207de474)  
+
+
 
