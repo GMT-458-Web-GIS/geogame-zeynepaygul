@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- OpenLayers JS -->
     <script src="https://cdn.jsdelivr.net/npm/ol@7.4.0/dist/ol.js"></script>
     <style>
+        /* Genel Stil */
         body {
             margin: 0;
             padding: 0;
@@ -59,7 +61,7 @@
         }
 
         #hint {
-            background-color: #f9f9f9;
+            background-color: #00535e;
             padding: 10px;
             border: 1px solid #ddd;
             margin-top: 10px;
@@ -67,17 +69,87 @@
             font-weight: bold;
         }
 
+        /* Başlangıç ekranı */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        /* Arka plan GIF */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZoeW8zem8yeHcwN2ZzdXNhZm13Nzh5OWlzb2UxMTMwMGRheDM0YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/K4FbQQ7mPaamViM2VZ/giphy.gif');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .start-container {
+            z-index: 1;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: white;
+            background-color: #1ea69d;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1ea69d;
+        }
+
+        button:active {
+            background-color: #005475;
+        }
+
+        /* Popup */
         .popup {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(104, 0, 96, 0.8);
+            background-color: rgba(61, 37, 122, 0.8);
             color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(125, 0, 153, 0.2);
+            box-shadow: 0 4px 8px rgba(70, 0, 85, 0.2);
             font-family: Arial, sans-serif;
             font-size: 18px;
             text-align: center;
@@ -96,8 +168,23 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
+
+    <!-- Başlangıç Ekranı -->
+    <div id="startScreen" class="start-container">
+        <h1>Hot-Cold Treasure Hunt</h1>
+        <p>
+            Welcome to the thrilling Hot-Cold Treasure Hunt game!
+            Your mission is to find the hidden treasure on the map.
+            Use the hot and cold hints to guide you.
+            Click "Start Game" to begin your adventure!
+        </p>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <!-- Oyun Ekranı -->
+    <div id="gameScreen" class="container" style="display:none;">
         <h1>Geo-Game: Hot-Cold Treasure Hunt</h1>
         <div id="map" style="width: 100%; height: 500px;"></div>
         <div class="buttons">
@@ -106,11 +193,154 @@
         </div>
         <div id="hint">Click on the map to begin!</div>
     </div>
+
+    <!-- Popup -->
     <div class="popup" id="hintPopup">
         The monument with Atatürk's words "En büyük savaş, cahilliğe karşı yapılan savaştır." written on it
         <br>
         <button id="closePopup">Close</button>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none'; // Başlangıç ekranını gizle
+            document.getElementById('gameScreen').style.display = 'block'; // Oyun ekranını göster
+        }
+
+        const map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([32.7333, 39.8727]),
+                zoom: 16
+            })
+        });
+
+        // İpucu ve konumların listesi
+        const locations = [
+            {
+                coords: ol.proj.fromLonLat([32.7333, 39.8727]),
+                hint: "The monument with Atatürk's words 'En büyük savaş, cahilliğe karşı yapılan savaştır.' written on it"
+            },
+            {
+                coords: ol.proj.fromLonLat([32.73529706040309, 39.86518316190052]),
+                hint: 'The best place to learn different languages'
+            },
+            {
+                coords: ol.proj.fromLonLat([32.73203561701033, 39.86843968897149]),
+                hint: 'There are plenty of cafes and food places'
+            }
+        ];
+
+        // Rastgele bir konum seç
+        let selectedLocation = locations[Math.floor(Math.random() * locations.length)];
+        let secretLocation = selectedLocation.coords;
+
+        let clickCount = 0;
+        let gameOver = false;
+
+        // Oyuncunun tıklama işlemi
+        map.on('singleclick', (event) => {
+            if (gameOver) return;
+
+            const popup = document.getElementById('hintPopup');
+            popup.style.display = 'none'; // Pop-up'ı kapat
+
+            const clickedCoords = event.coordinate;
+            const distance = ol.sphere.getDistance(
+                ol.proj.toLonLat(clickedCoords),
+                ol.proj.toLonLat(secretLocation)
+            );
+
+            createBlinkingPoint(clickedCoords);
+
+            if (distance > 150) {
+                updateHint('Cold, you are far from the treasure');
+            } else if (distance <= 150 && distance > 20) {
+                updateHint('Warm, you are getting closer');
+            } else if (distance <= 20) {
+                updateHint('Congratulations!');
+                showPopup();
+                gameOver = true;
+            }
+
+            if (!gameOver) {
+                document.getElementById('clickCount').textContent = ++clickCount;
+            }
+        });
+
+        // Hint butonu
+        document.getElementById('hintButton').addEventListener('click', () => {
+            const popup = document.getElementById('hintPopup');
+            popup.textContent = selectedLocation.hint;
+            popup.style.display = 'block';
+        });
+
+        // Close popup
+        document.getElementById('closePopup').addEventListener('click', () => {
+            const popup = document.getElementById('hintPopup');
+            popup.style.display = 'none';
+        });
+
+        // Tekrar Oyna Butonu
+        document.getElementById('restartButton').addEventListener('click', () => {
+            restartGame();
+        });
+
+        // Nokta yanıp söner
+        function createBlinkingPoint(coords) {
+            const point = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [new ol.Feature(new ol.geom.Point(coords))]
+                }),
+                style: new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 8,
+                        fill: new ol.style.Fill({ color: 'red' })
+                    })
+                })
+            });
+            map.addLayer(point);
+            setTimeout(() => map.removeLayer(point), 300);
+        }
+
+        // İpucu güncelleme
+        function updateHint(message) {
+            document.getElementById('hint').textContent = message;
+        }
+
+        // Tebrik mesajı ve "Tekrar Oyna" butonu gösterme
+        function showPopup() {
+            const popup = document.getElementById('hintPopup');
+            popup.innerHTML = `
+                Congratulations! You found the treasure!<br>
+                <button id="restartButton">Play Again</button>
+            `;
+            popup.style.display = 'block';
+
+            // Tekrar Oyna butonu olay dinleyicisini burada tanımlıyoruz
+            document.getElementById('restartButton').addEventListener('click', () => {
+                restartGame();
+            });
+        }
+
+        // Oyunu sıfırla ve yeni bir rastgele konum seç
+        function restartGame() {
+            selectedLocation = locations[Math.floor(Math.random() * locations.length)];
+            secretLocation = selectedLocation.coords;
+            clickCount = 0;
+            gameOver = false;
+
+            document.getElementById('clickCount').textContent = clickCount;
+            updateHint('Click on the map to begin!');
+            const popup = document.getElementById('hintPopup');
+            popup.style.display = 'none';
+        }
+    </script>
 </body>
+
 </html>
