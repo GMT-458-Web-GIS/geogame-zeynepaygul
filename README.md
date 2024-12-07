@@ -24,9 +24,13 @@ Geo-Game is an interactive "Hot-Cold" treasure hunting game designed to challeng
 2. **Guess**: Players click anywhere on the map to search for the treasure. After each guess, they receive a clue in the Clue Area about their proximity to the treasure.
 3. **Finding the Treasure**: The game ends when players find the treasure by getting close enough to its location.
 
-## Kaynaklar
+## Source
 
 [Gpt bağlantısı](https://chatgpt.com/share/67543754-43b4-800c-aa66-4323207de474)  
+
+## Game Link
+
+
 
 
 
