@@ -92,10 +92,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZoeW8zem8yeHcwN2ZzdXNhZm13Nzh5OWlzb2UxMTMwMGRheDM0YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/K4FbQQ7mPaamViM2VZ/giphy.gif');
+            background-image: url('https://media.giphy.com/media/efaYy4R3sn3c4eZyQ0/giphy.gif?cid=ecf05e475a8fh4ugf0jpi0gc7voo0qm85dohe2ia3kkiba83&ep=v1_gifs_search&rid=giphy.gif&ct=g');
             background-size: cover;
             background-position: center;
-            opacity: 0.3;
+            opacity: 0.5;
             z-index: -1;
         }
 
@@ -175,17 +175,24 @@
     <div id="startScreen" class="start-container">
         <h1>Hot-Cold Treasure Hunt</h1>
         <p>
-            Welcome to the thrilling Hot-Cold Treasure Hunt game!
-            Your mission is to find the hidden treasure on the map.
-            Use the hot and cold hints to guide you.
-            Click "Start Game" to begin your adventure!
+            Welcome to the Hot-Cold Treasure Hunt! In this exciting game, your objective is to find the hidden treasure on the map using clues based on your distance from it.
         </p>
+        <p>
+            If you're more than 150 meters away from the treasure, you'll receive a "Cold" hint, telling you that you're far from your goal. As you get closer, the hint will change to "Warm", indicating that you're getting nearer to the treasure, as long as you're within 150 to 20 meters.
+        </p>
+        <p>
+            Once you're within 20 meters of the treasure, the game will congratulate you with a "Congratulations!" message, signaling that you've found the hidden treasure. 
+        </p>
+        <p>
+            Your task is to find the treasure using as few clicks as possible!
+        </p>
+        
         <button onclick="startGame()">Start Game</button>
     </div>
 
     <!-- Oyun Ekranı -->
     <div id="gameScreen" class="container" style="display:none;">
-        <h1>Geo-Game: Hot-Cold Treasure Hunt</h1>
+        <h1>GeoGame: Hot-Cold Treasure Hunt</h1>
         <div id="map" style="width: 100%; height: 500px;"></div>
         <div class="buttons">
             <button id="hintButton">Hint</button>
@@ -222,20 +229,27 @@
 
         // İpucu ve konumların listesi
         const locations = [
-            {
-                coords: ol.proj.fromLonLat([32.7333, 39.8727]),
-                hint: "The monument with Atatürk's words 'En büyük savaş, cahilliğe karşı yapılan savaştır.' written on it"
-            },
-            {
-                coords: ol.proj.fromLonLat([32.73529706040309, 39.86518316190052]),
-                hint: 'The best place to learn different languages'
-            },
-            {
-                coords: ol.proj.fromLonLat([32.73203561701033, 39.86843968897149]),
-                hint: 'There are plenty of cafes and food places'
-            }
-        ];
-
+    {
+        coords: ol.proj.fromLonLat([32.7333, 39.8727]),
+        hint: "The monument with Atatürk's words 'En büyük savaş, cahilliğe karşı yapılan savaştır.' written on it"
+    },
+    {
+        coords: ol.proj.fromLonLat([32.73529706040309, 39.86518316190052]),
+        hint: 'The best place to learn different languages'
+    },
+    {
+        coords: ol.proj.fromLonLat([32.73203561701033, 39.86843968897149]),
+        hint: 'There are plenty of cafes and food places'
+    },
+    {
+        coords: ol.proj.fromLonLat([32.73432408410861, 39.86470622514485]),
+        hint: 'During breaks, geomatics students buy food and drinks here'
+    },
+    {
+        coords: ol.proj.fromLonLat([32.733988539665525, 39.86641969711243]),
+        hint: 'Campus Mosque'
+    }
+];
         // Rastgele bir konum seç
         let selectedLocation = locations[Math.floor(Math.random() * locations.length)];
         let secretLocation = selectedLocation.coords;
