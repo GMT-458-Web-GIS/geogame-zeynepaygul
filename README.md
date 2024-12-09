@@ -2,7 +2,8 @@
 # Hot-Cold Treasure Hunt  
 https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
 
-![geogame](https://github.com/user-attachments/assets/7c51b554-4202-42fc-a663-0343c634becb)
+![geogame](https://github.com/user-attachments/assets/b0f165a8-d7b2-48b7-b7d6-0986d0ee1d55)
+
 
 
 ## Game Objective
