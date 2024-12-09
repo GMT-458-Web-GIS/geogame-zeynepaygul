@@ -1,5 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ATV5e7Id)
-# Hot-Cold Treasure Hunt  https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
+# Hot-Cold Treasure Hunt  
+https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
 ![geogame](https://github.com/user-attachments/assets/7c51b554-4202-42fc-a663-0343c634becb)
 
 
@@ -35,20 +36,15 @@ Geo-Game is an interactive "Hot-Cold" treasure hunting game designed to challeng
 - **Restart Button Click Event:**  
   When the user clicks the "Restart" button, the game resets, a new treasure location is generated, and counters are reset.
 
----
-
 ## Use of Closures
 
 Closures were used in the project to protect and encapsulate the hidden treasure's coordinates, ensuring they remain private and are only accessed or modified through specific event handlers.
-
----
 
 ## Interaction with the DOM
 
 - Hints are dynamically updated based on the distance to the clicked point.  
 - A pop-up is displayed when the "Hint" button is clicked or when the treasure is found.  
 - The number of user clicks and other game-related information are updated on the DOM.
-
 
 ## Source
 
