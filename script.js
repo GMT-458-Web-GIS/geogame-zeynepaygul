@@ -131,3 +131,6 @@ function restartGame() {
     const popup = document.getElementById('hintPopup');
     popup.style.display = 'none';
 }
+window.onload = function () {
+    alert("Welcome to the Hot-Cold Treasure Hunt!");
+};
