@@ -1,6 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ATV5e7Id)
 # Hot-Cold Treasure Hunt  
-![geogame](https://github.com/user-attachments/assets/7c51b554-4202-42fc-a663-0343c634becb)
+https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
+
+![geogame](https://github.com/user-attachments/assets/b0f165a8-d7b2-48b7-b7d6-0986d0ee1d55)
+
 
 
 ## Game Objective
@@ -24,13 +27,32 @@ Geo-Game is an interactive "Hot-Cold" treasure hunting game designed to challeng
 2. **Guess**: Players click anywhere on the map to search for the treasure. After each guess, they receive a clue in the Clue Area about their proximity to the treasure.
 3. **Finding the Treasure**: The game ends when players find the treasure by getting close enough to its location.
 
+## Event Handlers
+
+- **Map Click Event:**  
+  When the user clicks on a point on the map, the distance between the clicked location and the treasure is calculated, and hints ("Cold", "Warm", "Congratulations!") are displayed on the screen.
+
+- **Hint Button Click Event:**  
+  When the "Hint" button is clicked, a clue is displayed on the screen to help the user locate the hidden treasure.
+
+- **Restart Button Click Event:**  
+  When the user clicks the "Restart" button, the game resets, a new treasure location is generated, and counters are reset.
+
+## Use of Closures
+
+Closures were used in the project to protect and encapsulate the hidden treasure's coordinates, ensuring they remain private and are only accessed or modified through specific event handlers.
+
+## Interaction with the DOM
+
+- Hints are dynamically updated based on the distance to the clicked point.  
+- A pop-up is displayed when the "Hint" button is clicked or when the treasure is found.  
+- The number of user clicks and other game-related information are updated on the DOM.
+
 ## Source
 
-[Gpt bağlantısı](https://chatgpt.com/share/67543754-43b4-800c-aa66-4323207de474)  
+[Gpt](https://chatgpt.com/share/67543754-43b4-800c-aa66-4323207de474)  
 
-## Game Link
 
-https://gmt-458-web-gis.github.io/geogame-zeynepaygul/
 
 
 
